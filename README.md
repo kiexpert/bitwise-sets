@@ -48,7 +48,7 @@ This repository is the home of multiple experimental and production-grade sets b
 
 | Set Name | Description |
 |----------|-------------|
-| `WkBitwiseSortSet` | A branchless, sorted set using reversed-bit index keys |
+| `WkBitwiseSortSet` | A blazing-fast, branchless set where order emerges directly from bits — not reversed, just right. |
 | `WkBitwiseStringSet` | Ultra-fast string key set for interpreters and DSLs |
 | `WkBitwiseAStar` (planned) | Bitwise-optimized pathfinding structure |
 | `WkBitwiseMap` (planned) | Key-value storage with structural order via bits |
