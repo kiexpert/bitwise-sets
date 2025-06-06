@@ -67,7 +67,7 @@ This repository is the home of multiple experimental and production-grade sets b
 ## 📘 License
 
 MIT License  
-Created by Will Kim (a.k.a 월드킹), 2025  
+Created by Will Kim (a.k.a bitWorldKing), 2025  
 → Visit [https://kiexpert.github.io/bitwise-sets/](https://kiexpert.github.io/bitwise-sets/)
 
 ---
