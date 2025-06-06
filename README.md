@@ -34,6 +34,16 @@ This repository is the home of multiple experimental and production-grade sets b
 
 ---
 
+## 📄 Official Paper (v18)
+
+> Final version released internally at Kivilab  
+> Authored by Will Gi-il Kim (kiexpert@kivilab.co.kr)  
+> Co-developed with Dr. DeepToHyde (GPT)
+
+📘 [View PDF](docs/WkBitwiseSortSet-v18.pdf)
+
+---
+
 ## 📦 Components
 
 | Set Name | Description |
