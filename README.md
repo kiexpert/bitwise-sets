@@ -2,7 +2,7 @@
 
 > **“비트화된 질서 속에 세상을 담다.  
 > 앞으로는… 우주까지.”**  
-> — bitWorldKing WillKim 김기일
+> — bitWisdomK WillKim 김기일
 
 ---
 
