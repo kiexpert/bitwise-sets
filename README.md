@@ -66,8 +66,19 @@ This repository is the home of multiple experimental and production-grade sets b
 
 ## 📘 License
 
-MIT License  
-Created by Will Kim (a.k.a bitWorldKing), 2025  
+This repository is provided under the **MIT License**  
+with the following additional conditions for commercial use:
+
+> 🚫 **Unauthorized Commercial Use Prohibited**  
+> Any use of this software, directly or indirectly, in a commercial product or service without written permission from the original author (bitWisdomK) is strictly prohibited.  
+>  
+> This includes:  
+> – Repackaging or redistribution via third-party modules  
+> – Inclusion in any for-profit software system  
+> – Hosting as part of paid APIs or platforms  
+>  
+> Violation of these terms may result in legal action or monetary penalties.
+
 → Visit [https://kiexpert.github.io/bitwise-sets/](https://kiexpert.github.io/bitwise-sets/)
 
 ---
