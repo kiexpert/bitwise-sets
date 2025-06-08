@@ -66,20 +66,9 @@ This repository is the home of multiple experimental and production-grade sets b
 
 ## 📘 License
 
-This repository is provided under the **MIT License**  
-with the following additional conditions for commercial use:
-
-> 🚫 **Unauthorized Commercial Use Prohibited**  
-> Any use of this software, directly or indirectly, in a commercial product or service without written permission from the original author (bitWisdomK) is strictly prohibited.  
->  
-> This includes:  
-> – Repackaging or redistribution via third-party modules  
-> – Inclusion in any for-profit software system  
-> – Hosting as part of paid APIs or platforms  
->  
-> Violation of these terms may result in legal action or monetary penalties.
-
-→ Visit [https://kiexpert.github.io/bitwise-sets/](https://kiexpert.github.io/bitwise-sets/)
+Licensed under the **BitwiseSets License v1.0 (BSLv1)**  
+— Free for education and research. Commercial use restricted for 2 years.  
+→ [View full license](LICENSE.txt)
 
 ---
 
