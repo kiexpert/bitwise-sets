@@ -1,0 +1,32 @@
+BitwiseSets License v1.0 (BSLv1)
+
+Copyright (c) 2025 Will Gi-il Kim (bitWisdomK)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”) to use,
+copy, modify, and distribute for educational and non-commercial purposes,
+subject to the following conditions:
+	1.	Commercial Use Restriction
+This Software MAY NOT be used, directly or indirectly, in any commercial
+product or service without the express written permission of the author.
+This includes (but is not limited to):
+	•	Reuse in paid products, SaaS platforms, or modules
+	•	Integration into monetized APIs, systems, or packages
+	•	Repackaging or resale via marketplaces or corporate software
+	2.	Delayed Commercial Use
+Commercial use will be automatically permitted two (2) years after the official
+release date of each module, unless otherwise extended by the author.
+	3.	Research & Publication Exception
+The Software may be used in academic research and publications, provided
+proper attribution is given to the author and this license is included.
+	4.	Attribution
+All redistributions must include:
+	•	This license (unaltered)
+	•	Copyright notice: © 2025 Will Gi-il Kim (bitWisdomK)
+	5.	Disclaimer
+The Software is provided “as is”, without warranty of any kind. The author
+shall not be liable for any damages arising from the use of the Software.
+
+For commercial licensing inquiries:
+📧 kiexpert@kivilab.co.kr
+🌐 https://kiexpert.github.io/bitwise-sets/
