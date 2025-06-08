@@ -66,9 +66,16 @@ This repository is the home of multiple experimental and production-grade sets b
 
 ## 📘 License
 
-Licensed under the **BitwiseSets License v1.0 (BSLv1)**  
-— Free for education and research. Commercial use restricted for 2 years.  
-→ [View full license](LICENSE.txt)
+**BitwiseSets License v1.0 (BSLv1)**  
+This project is released for **educational and non-commercial use only** for the first 2 years.  
+Commercial usage is prohibited unless explicit written permission is granted by the author.
+
+After 2 years from each module's official release date, commercial use is automatically permitted unless extended.
+
+- 📄 Full license: [LICENSE.txt](LICENSE.txt)
+- 📧 Contact for commercial licensing: [kiexpert@kivilab.co.kr](mailto:kiexpert@kivilab.co.kr)
+
+© 2025 Will Gi-il Kim (bitWisdomK)
 
 ---
 
