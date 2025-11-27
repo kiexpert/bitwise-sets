@@ -4,18 +4,26 @@
 <meta charset="UTF-8">
 <title>WkJSON – Well-Keyed JSON Formatter</title>
 <style>
-html,body{height:100%;margin:0;padding:0;background:#111;color:#eee;font-family:monospace;}
+html,body{
+  height:100%;margin:0;padding:12px;
+  background:#111;color:#eee;
+  font-family:monospace;
+}
 #wrap{display:flex;flex-direction:column;height:100%;}
-h1{font-size:20px;margin:12px 0;}
+h1{font-size:20px;margin:8px 0;}
 .sub{font-size:13px;color:#aaa;margin-bottom:12px;}
 textarea{
-  width:100%; flex:1;
-  background:#222;color:#eee;border:1px solid #444;
-  padding:8px;white-space:pre;overflow:auto;resize:none;
+  width:100%;flex:1;
+  background:#222;color:#eee;
+  border:1px solid #444;
+  padding:8px;white-space:pre;
+  overflow:auto;resize:none;
 }
 button{
   margin-right:6px;padding:6px 12px;
-  background:#333;color:#fff;border:1px solid #555;cursor:pointer;
+  background:#333;color:#fff;
+  border:1px solid #555;
+  cursor:pointer;
 }
 #controls{margin:6px 0;}
 #error{color:#e66;font-size:12px;margin-top:4px;}
@@ -35,25 +43,22 @@ button{
 <span id="error"></span>
 </div>
 
-<textarea id="output" placeholder="결과 출력" readonly></textarea>
+<textarea id="output" readonly placeholder="결과 출력"></textarea>
 
 </div>
-
 <script>
-// Height auto-fit on resize
 function fitHeights(){
   const wrap=document.getElementById("wrap").clientHeight;
   const hControls=document.getElementById("controls").clientHeight;
   const hTitle=document.querySelector("h1").clientHeight
-                +document.querySelector(".sub").clientHeight;
-  const remain=(wrap - hControls - hTitle - 32) / 2;
+               +document.querySelector(".sub").clientHeight;
+  const remain=(wrap-hControls-hTitle-36)/2;
   document.getElementById("input").style.height=remain+"px";
   document.getElementById("output").style.height=remain+"px";
 }
-window.addEventListener("resize", fitHeights);
-window.addEventListener("load", fitHeights);
+window.addEventListener("resize",fitHeights);
+window.addEventListener("load",fitHeights);
 
-// Formatter engine
 function wkJsonFormatFromObject(obj){
   let s=JSON.stringify(obj);
   s=s.replace(/,"/g,', "').replace(/":/g,'": ');
@@ -67,19 +72,19 @@ function wkJsonFormat(input){
 }
 function formatJSON(){
   const t=document.getElementById("input").value;
-  const err=document.getElementById("error");
+  const e=document.getElementById("error");
   try{
-    err.textContent="";
+    e.textContent="";
     document.getElementById("output").value=wkJsonFormat(t);
-  }catch(e){
-    err.textContent="Parse Error: "+e.message;
+  }catch(err){
+    e.textContent="Parse Error: "+err.message;
   }
 }
 function copyOutput(){
   const out=document.getElementById("output");
-  out.select(); document.execCommand("copy");
+  out.select();
+  document.execCommand("copy");
 }
 </script>
-
 </body>
 </html>
