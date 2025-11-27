@@ -1,71 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>WkJSON - Well Keyed JSON Formatter</title>
+<title>WkJSON – Well-Keyed JSON Formatter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{margin:0;background:#111;color:#0f0;font-family:Consolas,monospace;}
-.container{display:flex;height:calc(100vh - 40px);}
-.panel{flex:1;padding:10px;box-sizing:border-box;overflow:auto;white-space:pre;}
-#input{white-space:pre-wrap;border-right:1px solid #333;}
-#output{white-space:pre;overflow-x:auto;}
-.toolbar{
-height:40px;background:#000;border-top:1px solid #333;
-display:flex;justify-content:center;align-items:center;gap:10px;
-position:fixed;bottom:0;width:100%;
+body{margin:0;background:#0f0f0f;color:#eee;font-family:Consolas,monospace}
+header{padding:10px 14px;font-size:18px;border-bottom:1px solid #333;}
+header span.title{color:#fff;font-weight:bold}
+header span.brand{color:#4cc2ff;font-weight:bold}
+.container{display:flex;height:calc(100vh - 90px);overflow:hidden}
+textarea,pre{
+  width:50%;height:100%;padding:10px;margin:0;border:none;
+  resize:none;outline:none;overflow:auto;white-space:nowrap;
+  font-size:13px;background:#111;color:#0f0;
+}
+textarea{white-space:pre-wrap;color:#fffc}
+.controls{
+  height:40px;display:flex;gap:8px;align-items:center;
+  justify-content:center;background:#111;border-top:1px solid #333;
 }
 button{
-background:#222;color:#0f0;border:1px solid #0f0;
-padding:5px 10px;cursor:pointer;font-size:14px;
+  background:#222;color:#eee;border:1px solid #555;
+  padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;
 }
-button:hover{background:#0f0;color:#111;}
+button:hover{background:#4cc2ff;color:#000;border-color:#4cc2ff}
 </style>
 </head>
 <body>
-<h3 style="margin:5px 10px;">WkJSON – Well Keyed JSON Formatter  by Will Kim & DeepToHyde</h3>
+<header>
+<span class="title">WkJSON – Well-Keyed JSON Formatter</span>
+&nbsp;by <span class="brand">Will Kim &amp; DeepToHyde</span>
+</header>
+
 <div class="container">
-<textarea id="input" class="panel" placeholder="Paste JSON here..."></textarea>
-<textarea id="output" class="panel" readonly placeholder="Formatted JSON will appear here..."></textarea>
+<textarea id="input" placeholder="Paste JSON here..."></textarea>
+<pre id="output"></pre>
 </div>
-<div class="toolbar">
-<button onclick="convert()">Convert</button>
-<button onclick="copyIn()">Copy IN</button>
-<button onclick="copyOut()">Copy OUT</button>
-<button onclick="loadSample()">Sample</button>
+
+<div class="controls">
+<button id="btnConvert">Convert</button>
+<button id="btnCopyIn">Copy IN</button>
+<button id="btnCopyOut">Copy OUT</button>
+<button id="btnSample">Sample</button>
 </div>
 
 <script>
-const sampleJSON = `{"IDX":{"name":"Index AAA","symbol":"^IDX","interval":"15m","rows":10,"profile":{"100":10000,"101":20000},"price_set":[100,101,102],"energies":[1,2,3],"ohlcv":{"ts":[1,2,3],"open":[10,11,12],"high":[15,16,17],"low":[9,10,11],"close":[14,15,16],"volume":[100,200,300]}}}`;
+//────────────────────────────────────────
+// WkJSON Core Formatter
+//────────────────────────────────────────
+function wkFormat(obj){
+  try{
+    // JSON.stringify with no indentation → one-line per logical segment
+    return JSON.stringify(obj, null, 0)
+      // rule #1: key starting with non-number/negative → newline before
+      .replace(/(,|{)"(?=[^0-9-])/g, '$1\n"')
+      // rule #2: object boundary + next object-start key → adjust
+      .replace(/}\n,"(?=[^0-9-][^"]*":{")/g,'\n},"');
+  }catch(e){
+    return 'FORMAT ERROR: ' + e.message;
+  }
+}
 
-function formatJSON(text){
-try{
-const obj = JSON.parse(text);
-return JSON.stringify(obj,null,2);
-}catch(e){
-return "Invalid JSON";
-}
-}
-function convert(){
-const txt = document.getElementById("input").value;
-document.getElementById("output").value = formatJSON(txt);
-}
-function copyIn(){
-document.getElementById("input").select();
-document.execCommand("copy");
-}
-function copyOut(){
-document.getElementById("output").select();
-document.execCommand("copy");
-}
-function loadSample(){
-document.getElementById("input").value = sampleJSON;
-convert();
-}
-document.getElementById("input").addEventListener("input",()=>{
-clearTimeout(window.autoConvertTimer);
-window.autoConvertTimer = setTimeout(convert,800);
-});
-setTimeout(loadSample,1000);
+//────────────────────────────────────────
+// UI
+//────────────────────────────────────────
+const $in = document.getElementById('input');
+const $out = document.getElementById('output');
+
+document.getElementById('btnConvert').onclick = ()=>{
+  try{
+    const obj = JSON.parse($in.value);
+    $out.textContent = wkFormat(obj);
+  }catch(e){
+    $out.textContent = '❌ JSON Parse Error: ' + e.message;
+  }
+};
+document.getElementById('btnCopyIn').onclick = ()=>{
+  $in.select(); document.execCommand('copy');
+};
+document.getElementById('btnCopyOut').onclick = ()=>{
+  navigator.clipboard.writeText($out.textContent);
+};
+document.getElementById('btnSample').onclick = ()=>{
+  $in.value = sampleJSON;
+};
+
+//────────────────────────────────────────
+// Default Sample (WkProfile-like structure)
+//────────────────────────────────────────
+const sampleJSON = `{"IDX":{"name":"Index AAA","symbol":"^IDX","interval":"15m","rows":10,"profile":{"100":10000,"101":20000},"price_set":[100,101,102],"energies":[1,2,3],"ohlcv":{"ts":[1,2,3],"open":[10,11,12],"high":[15,16,17],"low":[9,10,11],"close":[14,15,16],"volume":[100,200,300]}}}`;
 </script>
 </body>
 </html>
