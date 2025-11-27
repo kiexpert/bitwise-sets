@@ -1,90 +1,71 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>WkJSON – Well-Keyed JSON Formatter</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"content="width=device-width,initial-scale=1.0"><title>WkJSON Formatter</title>
 <style>
-html,body{
-  height:100%;margin:0;padding:12px;
-  background:#111;color:#eee;
-  font-family:monospace;
-}
-#wrap{display:flex;flex-direction:column;height:100%;}
-h1{font-size:20px;margin:8px 0;}
-.sub{font-size:13px;color:#aaa;margin-bottom:12px;}
-textarea{
-  width:100%;flex:1;
-  background:#222;color:#eee;
-  border:1px solid #444;
-  padding:8px;white-space:pre;
-  overflow:auto;resize:none;
-}
-button{
-  margin-right:6px;padding:6px 12px;
-  background:#333;color:#fff;
-  border:1px solid #555;
-  cursor:pointer;
-}
-#controls{margin:6px 0;}
-#error{color:#e66;font-size:12px;margin-top:4px;}
-</style>
-</head>
-<body>
-<div id="wrap">
-
-<h1>WkJSON – Well-Keyed JSON Formatter</h1>
-<div class="sub">Readable. Diff-Friendly. Massive-JSON-Proof. by Will Kim & DeepToHyde</div>
-
-<textarea id="input" placeholder="여기에 JSON을 붙여넣으세요"></textarea>
-
-<div id="controls">
-<button onclick="formatJSON()">Format</button>
-<button onclick="copyOutput()">Copy</button>
-<span id="error"></span>
+body{margin:0;padding:0;font-family:Consolas,monospace;background:#111;color:#eee;display:flex;flex-direction:column;height:100vh}
+header{padding:10px 16px;background:#222;font-size:18px;font-weight:bold;flex:none;white-space:nowrap}
+header span{color:#00eaff}
+section{flex:1;display:flex;gap:4px;padding:4px}
+textarea{flex:1;background:#000;border:1px solid #333;color:#0f0;font-size:13px;resize:none;padding:6px;box-sizing:border-box;overflow:auto;line-height:1.3}
+#out{white-space:pre}
+.controls{padding:6px 12px;background:#222;display:flex;gap:6px;flex:none}
+button{padding:6px 10px;background:#444;border:none;color:#eee;cursor:pointer;font-size:12px;border-radius:3px}
+button:hover{background:#555}
+.key{color:#8cf}
+.num{color:#ffb347}
+.str{color:#c5e1ff}
+.bracket{color:#aaa}
+.ln{color:#666;user-select:none;margin-right:8px}
+pre{margin:0;white-space:pre}
+</style></head><body>
+<header>WkJSON — Well Keyed JSON Formatter <span>by Will Kim & DeepToHyde</span></header>
+<div class="controls">
+<button id="convertBtn">Convert</button>
+<button id="copyIn">Copy IN</button>
+<button id="copyOut">Copy OUT</button>
+<button id="loadSample">Sample JSON</button>
 </div>
+<section>
+<textarea id="input" wrap="soft"></textarea>
+<textarea id="output" wrap="off"></textarea>
+</section>
 
-<textarea id="output" readonly placeholder="결과 출력"></textarea>
-
-</div>
 <script>
-function fitHeights(){
-  const wrap=document.getElementById("wrap").clientHeight;
-  const hControls=document.getElementById("controls").clientHeight;
-  const hTitle=document.querySelector("h1").clientHeight
-               +document.querySelector(".sub").clientHeight;
-  const remain=(wrap-hControls-hTitle-36)/2;
-  document.getElementById("input").style.height=remain+"px";
-  document.getElementById("output").style.height=remain+"px";
-}
-window.addEventListener("resize",fitHeights);
-window.addEventListener("load",fitHeights);
+const input=document.getElementById("input"),output=document.getElementById("output")
+const converBtn=document.getElementById("convertBtn"),copyIn=document.getElementById("copyIn"),copyOut=document.getElementById("copyOut"),loadSample=document.getElementById("loadSample")
 
-function wkJsonFormatFromObject(obj){
-  let s=JSON.stringify(obj);
-  s=s.replace(/,"/g,', "').replace(/":/g,'": ');
-  s=s.replace(/(, |{ )\s*"(?=[^0-9-])/g,'\n$1"');
-  s=s.replace(/}\n, "(?=[^0-9-][^"]*"\s*:\s*{\s*"[^0-9-])/g,'\n},"');
-  return s;
+function wkDump(obj){
+let s=JSON.stringify(obj,null).replace(/,|:/g,m=>m+" ")
+s=s.replace(/(, |{ )\s*"(?=[^0-9-])/,m=>"\n"+m)
+s=s.replace(/}[\n]?, "(?=[^0-9-])/,m=>"\n},"")
+return s}
+
+function highlight(s){
+return s
+.replace(/"(.*?)":/g,'<span class="key">"$1"</span>:')
+.replace(/\b(-?\d+(\.\d+)?)\b/g,'<span class="num">$1</span>')
+.replace(/"(.*?)"/g,'<span class="str">"$1"</span>')
+.replace(/[\{\}\[\]]/g,m=>'<span class="bracket">'+m+'</span>')
 }
-function wkJsonFormat(input){
-  if(typeof input==="string") input=JSON.parse(input);
-  return wkJsonFormatFromObject(input);
+
+function addLineNumbers(s){
+const lines=s.split("\n").map((l,i)=>`<span class="ln">${String(i+1).padStart(3," ")}</span>${l}`)
+return lines.join("\n")
 }
-function formatJSON(){
-  const t=document.getElementById("input").value;
-  const e=document.getElementById("error");
-  try{
-    e.textContent="";
-    document.getElementById("output").value=wkJsonFormat(t);
-  }catch(err){
-    e.textContent="Parse Error: "+err.message;
-  }
+
+function convert(){
+try{
+const obj=JSON.parse(input.value)
+let s=wkDump(obj)
+s=s.split("\n").map(l=>highlight(l)).join("\n")
+s=addLineNumbers(s)
+output.innerHTML=s
+}catch(e){output.innerHTML="❌ JSON Parse Error: "+e.message}
 }
-function copyOutput(){
-  const out=document.getElementById("output");
-  out.select();
-  document.execCommand("copy");
-}
+
+converBtn.onclick=convert
+copyIn.onclick=()=>navigator.clipboard.writeText(input.value)
+copyOut.onclick=()=>navigator.clipboard.writeText(output.innerText)
+loadSample.onclick=()=>fetch("default.json").then(r=>r.text()).then(t=>{input.value=t;convert()})
+
+window.addEventListener('load',()=>setTimeout(()=>loadSample.click(),1000))
 </script>
-</body>
-</html>
+</body></html>
