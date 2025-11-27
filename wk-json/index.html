@@ -2,34 +2,67 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>WkJSON Formatter</title>
+<title>WkJSON – Well-Keyed JSON Formatter</title>
 <style>
-body{font-family:monospace;background:#111;color:#eee;margin:0;padding:16px;}
-h1{font-size:18px;margin-bottom:12px;}
-textarea{width:100%;height:240px;background:#222;color:#eee;border:1px solid #444;padding:8px;white-space:pre;overflow:auto;}
-button{margin-top:8px;padding:6px 12px;background:#333;color:#fff;border:1px solid #555;cursor:pointer;}
-#error{color:#e66;padding-top:6px;}
+html,body{height:100%;margin:0;padding:0;background:#111;color:#eee;font-family:monospace;}
+#wrap{display:flex;flex-direction:column;height:100%;}
+h1{font-size:20px;margin:12px 0;}
+.sub{font-size:13px;color:#aaa;margin-bottom:12px;}
+textarea{
+  width:100%; flex:1;
+  background:#222;color:#eee;border:1px solid #444;
+  padding:8px;white-space:pre;overflow:auto;resize:none;
+}
+button{
+  margin-right:6px;padding:6px 12px;
+  background:#333;color:#fff;border:1px solid #555;cursor:pointer;
+}
+#controls{margin:6px 0;}
+#error{color:#e66;font-size:12px;margin-top:4px;}
 </style>
 </head>
 <body>
-<h1>WkJSON Formatter by Will Kim &amp; DeepToHyde</h1>
+<div id="wrap">
+
+<h1>WkJSON – Well-Keyed JSON Formatter</h1>
+<div class="sub">Readable. Diff-Friendly. Massive-JSON-Proof. by Will Kim & DeepToHyde</div>
 
 <textarea id="input" placeholder="여기에 JSON을 붙여넣으세요"></textarea>
+
+<div id="controls">
 <button onclick="formatJSON()">Format</button>
 <button onclick="copyOutput()">Copy</button>
-<div id="error"></div>
-<textarea id="output" readonly placeholder="결과 출력"></textarea>
+<span id="error"></span>
+</div>
+
+<textarea id="output" placeholder="결과 출력" readonly></textarea>
+
+</div>
 
 <script>
+// Height auto-fit on resize
+function fitHeights(){
+  const wrap=document.getElementById("wrap").clientHeight;
+  const hControls=document.getElementById("controls").clientHeight;
+  const hTitle=document.querySelector("h1").clientHeight
+                +document.querySelector(".sub").clientHeight;
+  const remain=(wrap - hControls - hTitle - 32) / 2;
+  document.getElementById("input").style.height=remain+"px";
+  document.getElementById("output").style.height=remain+"px";
+}
+window.addEventListener("resize", fitHeights);
+window.addEventListener("load", fitHeights);
+
+// Formatter engine
 function wkJsonFormatFromObject(obj){
-  let s = JSON.stringify(obj);
-  s = s.replace(/,"/g, ', "').replace(/":/g, '": ');
-  s = s.replace(/(, |{ )\s*"(?=[^0-9-])/g, '\n$1"');
-  s = s.replace(/}\n, "(?=[^0-9-][^"]*"\s*:\s*{\s*"[^0-9-])/g, '\n},"');
+  let s=JSON.stringify(obj);
+  s=s.replace(/,"/g,', "').replace(/":/g,'": ');
+  s=s.replace(/(, |{ )\s*"(?=[^0-9-])/g,'\n$1"');
+  s=s.replace(/}\n, "(?=[^0-9-][^"]*"\s*:\s*{\s*"[^0-9-])/g,'\n},"');
   return s;
 }
 function wkJsonFormat(input){
-  if(typeof input==="string") input = JSON.parse(input);
+  if(typeof input==="string") input=JSON.parse(input);
   return wkJsonFormatFromObject(input);
 }
 function formatJSON(){
@@ -37,15 +70,14 @@ function formatJSON(){
   const err=document.getElementById("error");
   try{
     err.textContent="";
-    document.getElementById("output").value = wkJsonFormat(t);
+    document.getElementById("output").value=wkJsonFormat(t);
   }catch(e){
-    err.textContent="JSON Parse Error: "+e.message;
+    err.textContent="Parse Error: "+e.message;
   }
 }
 function copyOutput(){
   const out=document.getElementById("output");
-  out.select();
-  document.execCommand("copy");
+  out.select(); document.execCommand("copy");
 }
 </script>
 
