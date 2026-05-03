@@ -29,7 +29,7 @@
 - **KSCRIPT** — server-side DSL with real-time hot-reload; benchmarked faster than PHP under equivalent load
 - **WKAppBot** — AI-driven desktop automation SDK (Windows UI Automation + Claude integration)
 
-🔗 [Portfolio Site](https://kiexpert.github.io/bitwise-sets/) · [WKAppBot SDK](https://github.com/kiexpert/wkappbot-sdk) · [LinkedIn](https://www.linkedin.com/in/kiexpert/)
+🔗 [Portfolio Site](https://kiexpert.github.io/bitwise-sets/) · [WKAppBot Docs](https://kiexpert.github.io/wkappbot-sdk/) · [WKAppBot GitHub](https://github.com/kiexpert/wkappbot-sdk) · [LinkedIn](https://www.linkedin.com/in/kiexpert/)
 
 ---
 
