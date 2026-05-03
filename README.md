@@ -44,12 +44,23 @@ This repository is the home of multiple experimental and production-grade sets b
 
 ---
 
+## 📄 Documents / 문서
+
+| Document | Description |
+|---|---|
+| [김기일_포트폴리오_2026.pdf](docs/김기일_포트폴리오_2026.pdf) | 포트폴리오 2026 — 11개 주요 프로젝트, CrazyWWWBoard부터 AutoLayout까지 |
+| [김기일_Portfolio_Algorithms_Optimization.PDF](docs/김기일_Portfolio_Algorithms_Optimization.PDF) | 알고리즘 최적화 포트폴리오 (2025) |
+| [WkBitwiseSortSet-v18.pdf](docs/WkBitwiseSortSet-v18.pdf) | Official paper: WkBitwiseSortSet v18 |
+| [WillKim_Career_Description.txt](docs/WillKim_Career_Description.txt) | Full career description (30+ years) |
+
+---
+
 ## 📦 Components
 
 | Set Name | Description |
 |----------|-------------|
 | `WkBitwiseSortSet` | A blazing-fast, branchless set where order emerges directly from bitwise structure — not reversed, just right. |
-| `WkBitwiseStringSet` | Ultra-fast string key set for interpreters and DSLs |
+| `WkBitwiseStringSet` | Ultra-fast string key set for interpreters/DSLs — branchless lookup with cache-optimized compact layout |
 | `WkBitwiseAStar` (planned) | Bitwise-optimized pathfinding structure |
 | `WkBitwiseMap` (planned) | Key-value storage with structural order via bits |
 
